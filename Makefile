@@ -10,7 +10,7 @@ SNMP_EX_VERSION := v0.13.0
 GENERATOR_REV := 3eb190d598b19f09a0a9f7e34d26989f1916c566
 
 .PHONY: dev
-dev: gen-config cook-image
+dev: cook-image
 	@echo "Will be accessible at http://$(shell hostname -f ):9116/"
 	docker run --rm -p 9116:9116 "$(DOCKER_TAG)"
 
@@ -32,7 +32,7 @@ clean:
 	rm -rf vendor-snmp-exporter
 
 .PHONY: cook-image
-cook-image:
+cook-image: gen-config
 	docker build --build-arg snmp_exporter_version=$(SNMP_EX_VERSION) --pull -t $(DOCKER_TAG) .
 
 .PHONY: push-image
