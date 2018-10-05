@@ -17,6 +17,15 @@ pipeline {
       }
     }
 
+    stage('set-version') {
+      steps {
+        script {
+          sha = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+          version = "${new Date().format("yyyy-MM-dd-'T'HH-mm-ss")}-git${sha}"
+        }
+      }
+    }
+
     stage('cook-image') {
       steps {
         sh 'make cook-image'
