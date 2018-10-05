@@ -27,6 +27,10 @@ pipeline {
     }
 
     stage('cook-image') {
+      environment {
+        DOCKER_REPO = 'docker-push.ocf.berkeley.edu/'
+        DOCKER_REVISION = "${version}"
+      }
       steps {
         sh 'make cook-image'
       }
@@ -35,7 +39,7 @@ pipeline {
     stage('push-to-registry') {
       environment {
         DOCKER_REPO = 'docker-push.ocf.berkeley.edu/'
-          DOCKER_REVISION = "${version}"
+        DOCKER_REVISION = "${version}"
       }
       when {
         branch 'master'
