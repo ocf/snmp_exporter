@@ -15,7 +15,7 @@ dev: cook-image
 	docker run --rm -p 9116:9116 "$(DOCKER_TAG)"
 
 gen-config: generator.yml vendor-snmp-exporter
-	docker run -ti \
+	docker run -t \
 		-v $(PWD)/vendor-snmp-exporter/generator/mibs:/root/.snmp/mibs:ro \
 		-v $(PWD)/:/opt/ \
 		snmp-generator generate
@@ -29,7 +29,7 @@ vendor-snmp-exporter:
 
 .PHONY: clean
 clean:
-	rm -rf vendor-snmp-exporter
+	rm -rf vendor-snmp-exporter snmp.yml
 
 .PHONY: cook-image
 cook-image: gen-config
