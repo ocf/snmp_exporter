@@ -47,7 +47,7 @@ pipeline {
         label 'deploy'
       }
       steps {
-        marathonDeployApp('snmp_exporter', version)
+        marathonDeployApp('snmp-exporter', version)
       }
     }
   }
