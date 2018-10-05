@@ -36,4 +36,5 @@ cook-image: gen-config
 	docker build --build-arg snmp_exporter_version=$(SNMP_EX_VERSION) --pull -t $(DOCKER_TAG) .
 
 .PHONY: push-image
+push-image:
 	docker push $(DOCKER_TAG)
