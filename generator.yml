@@ -1,11 +1,8 @@
 modules:
   printer:
     walk:
-      - '1.3.6.1.2.1.43.11.1.1.8.1.1' # toner max
-      - '1.3.6.1.2.1.43.11.1.1.9.1.1' # toner current
-      - '1.3.6.1.2.1.43.11.1.1.8.1.2' # maintkit max
-      - '1.3.6.1.2.1.43.11.1.1.9.1.2' # maintkit current
-      - '1.3.6.1.2.1.43.10.2.1.4.1.1' # lifetime pages printed
+      - printmib
+      - hrPrinterDetectedErrorState
 
     auth:
       username: public
