@@ -2,7 +2,7 @@ modules:
   printer:
     walk:
       - printmib
-      - hrPrinterDetectedErrorState
+      - hrPrinterTable
 
     auth:
       username: public

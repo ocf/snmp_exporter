@@ -15,6 +15,7 @@ dev: cook-image
 	docker run --rm -p 9116:9116 "$(DOCKER_TAG)"
 
 gen-config: generator.yml vendor-snmp-exporter
+	cd vendor-snmp-exporter/generator && docker build -t snmp-generator .
 	docker run -t \
 		-v $(PWD)/vendor-snmp-exporter/generator/mibs:/root/.snmp/mibs:ro \
 		-v $(PWD)/:/opt/ \
@@ -24,8 +25,7 @@ vendor-snmp-exporter:
 	git clone -q https://github.com/prometheus/snmp_exporter vendor-snmp-exporter
 	cd vendor-snmp-exporter/generator && \
 		git checkout $(GENERATOR_REV) && \
-		make mibs && \
-		docker build -t snmp-generator .
+		make mibs
 
 .PHONY: clean
 clean:
