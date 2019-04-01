@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+spec:
+  # This only needs to be accessible from within the OCF, so instead of setting
+  # up ingress with a proper URL, we just expose a NodePort which Prometheus can
+  # access.
+  type: NodePort
+  selector:
+    app: snmp-exporter
+  ports:
+    - port: 9116
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: snmp-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snmp-exporter
+  template:
+    metadata:
+      labels:
+        app: snmp-exporter
+    spec:
+      containers:
+        - name: snmp-exporter
+          image: "docker.ocf.berkeley.edu/snmp_exporter:<%= version %>"
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: 50m
+          ports:
+            - containerPort: 9116
