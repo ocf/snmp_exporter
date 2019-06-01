@@ -3,14 +3,11 @@ kind: Service
 metadata:
   name: service
 spec:
-  # This only needs to be accessible from within the OCF, so instead of setting
-  # up ingress with a proper URL, we just expose a NodePort which Prometheus can
-  # access.
-  type: NodePort
   selector:
     app: snmp-exporter
   ports:
-    - port: 9116
+    - port: 80
+      targetPort: 9116
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,3 +34,16 @@ spec:
               cpu: 50m
           ports:
             - containerPort: 9116
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: virtual-host-ingress
+spec:
+  rules:
+    - host: snmp-exporter.ocf.berkeley.edu
+      http:
+        paths:
+          - backend:
+              serviceName: service
+              servicePort: 80
