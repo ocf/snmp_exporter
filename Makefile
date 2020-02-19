@@ -1,7 +1,7 @@
 DOCKER_REVISION ?= snmp_exporter-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/snmp_exporter:$(DOCKER_REVISION)
 
-SNMP_EX_VERSION := v0.15.0
+SNMP_EX_VERSION := v0.16.1
 
 .PHONY: dev
 dev: cook-image
@@ -11,8 +11,9 @@ dev: cook-image
 gen-config: generator.yml vendor-snmp-exporter
 	cd vendor-snmp-exporter/generator && docker build -t snmp-generator .
 	docker run -t \
-		-v $(PWD)/vendor-snmp-exporter/generator/mibs:/root/.snmp/mibs:ro \
+		-v $(PWD)/vendor-snmp-exporter/generator/mibs:/mibs:ro \
 		-v $(PWD)/:/opt/ \
+		-e MIBDIRS=/mibs \
 		snmp-generator generate
 
 vendor-snmp-exporter:
