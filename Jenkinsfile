@@ -1,5 +1,3 @@
-servicePipeline(
-    deployTargets: ['snmp-exporter'],
-)
+servicePipeline()
 
 // vim: ft=groovy
