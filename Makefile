@@ -1,7 +1,7 @@
 DOCKER_REVISION ?= snmp_exporter-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/snmp_exporter:$(DOCKER_REVISION)
 
-SNMP_EX_VERSION := v0.20.0
+SNMP_EX_VERSION := master
 
 .PHONY: dev
 dev: cook-image
