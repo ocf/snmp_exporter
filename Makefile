@@ -1,7 +1,7 @@
 DOCKER_REVISION ?= snmp_exporter-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/snmp_exporter:$(DOCKER_REVISION)
 
-SNMP_EX_VERSION := v0.16.1
+SNMP_EX_VERSION := master
 
 .PHONY: dev
 dev: cook-image
@@ -19,7 +19,6 @@ gen-config: generator.yml vendor-snmp-exporter
 vendor-snmp-exporter:
 	git clone -q https://github.com/prometheus/snmp_exporter vendor-snmp-exporter
 	cd vendor-snmp-exporter/generator && \
-		git checkout $(SNMP_EX_VERSION) && \
 		make mibs
 
 .PHONY: clean
