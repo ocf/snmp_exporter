@@ -19,7 +19,6 @@ gen-config: generator.yml vendor-snmp-exporter
 vendor-snmp-exporter:
 	git clone -q https://github.com/prometheus/snmp_exporter vendor-snmp-exporter
 	cd vendor-snmp-exporter/generator && \
-		git checkout $(SNMP_EX_VERSION) && \
 		make mibs
 
 .PHONY: clean
